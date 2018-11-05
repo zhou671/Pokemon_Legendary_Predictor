@@ -1,4 +1,4 @@
-# CS373_Project
+# Project
 CS373_Project
 
 Files exists:
