@@ -1,5 +1,5 @@
-# Project
-CS373_Project
+# Project Name: Pokemon Legendary Predictor
+# Project Goal: To predict Pokemon legendary using svm
 
 Files exists:
 
