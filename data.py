@@ -7,6 +7,7 @@
 
 import numpy as np
 import random
+from sklearn import svm
 
 def run():
 	N = 800
@@ -33,4 +34,4 @@ def run():
 			count = count + 1
 
 if __name__ == '__main__':
-	run() 
+	run()
