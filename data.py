@@ -9,7 +9,7 @@ import numpy as np
 #import random
 
 def run():
-	data =  np.load('inputData\\x_clean.npy')
+	data =  np.load('inputData//x_clean.npy')
 	
 	## delete id colomn
 	data = data[:, 1:8]
@@ -32,8 +32,8 @@ def run():
 
 	## X0-X6, Y0-Y6
 	for i in range(7):
-		namex = "data\\X" + str(i) + ".npy"
-		namey = "data\\Y" + str(i) + ".npy"
+		namex = "data//X" + str(i) + ".npy"
+		namey = "data//Y" + str(i) + ".npy"
 		
 		x = np.zeros((100, 6))
 		y = np.zeros((100))
@@ -47,8 +47,8 @@ def run():
 		np.save(namey, y)
 
 	## X7, Y7
-	namex = "data\\X7.npy"
-	namey = "data\\Y7.npy"
+	namex = "data//X7.npy"
+	namey = "data//Y7.npy"
 	x = np.zeros((100, 6))
 	y = np.zeros((100))
 	x[0:91] = data_pos[644:735, 0:6]
