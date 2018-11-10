@@ -1,7 +1,8 @@
 import numpy as np
 from itertools import combinations
 from sklearn import svm
-
+from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.svm import OneClassSVM 
 def run(clf):
     ##clf = svm.SVC(gamma = 'scale')
 
@@ -9,8 +10,8 @@ def run(clf):
     List_x = [None] * 8
     List_y = [None] * 8
     for i in range(8):
-        x_name = "data\\X" + str(i) + ".npy"
-        y_name = "data\\Y" + str(i) + ".npy"
+        x_name = "data/X" + str(i) + ".npy"
+        y_name = "data/Y" + str(i) + ".npy"
         List_x[i] = np.load(x_name)
         List_y[i] = np.load(y_name)
 
@@ -25,7 +26,7 @@ def run(clf):
     clf.fit(x,y)
     result = clf.predict(x)
     count = len(y[np.where(y == result)])
-    print("Training acc: " + str(count / 800))
+    print("Training acc: " + str(count / 800.0))
 
     ## 7-1 test acc
     count = 0
@@ -45,7 +46,7 @@ def run(clf):
             if test_y[j] == result[j]:
                 count = count + 1
     
-    print("7-1 test acc: " + str(count / 800))
+    print("7-1 test acc: " + str(count / 800.0))
 
     ## 4-4 test acc
     count = 0
@@ -70,5 +71,29 @@ def run(clf):
         result = clf.predict(test_x)
         count += len(y[np.where(test_y == result)])
 
-    print("4-4 test acc: " + str(count / 28000))
+    print("4-4 test acc: " + str(count / 28000.0))
     return
+
+if __name__ == '__main__':
+    #classifiers = [
+    #   (
+    #       'gb3',
+    #       GradientBoostingClassifier(learning_rate=0.3, n_estimators=110, max_depth=3)
+    #   ),
+    #       'gb4',
+    #       GradientBoostingClassifier(learning_rate=0.3, n_estimators=110, max_depth=4)
+    #   ),
+    #   (
+    #       'gb4'
+    #       GradientBoostingClassifier(learning_rate=0.3, n_estimators=110, max_depth=5)
+    #   )
+    #]
+    # for j in range(10):
+
+    #     clf = GradientBoostingClassifier(learning_rate= j * 0.02 + 0.1, n_estimators=180, max_depth=3)
+    #     print('rate ' + str(j * 0.02 + 0.1))
+    #     run(clf)
+   #clf = GradientBoostingClassifier(learning_rate=0.2, n_estimators=180, max_depth=3)
+    #clf = OneClassSVM(gamma = 0.5)
+   clf = svm.SVC(C = 1.0, kernel = 'poly', degree = 3, gamma = 'scale')
+   run(clf)
