@@ -2,15 +2,15 @@ import numpy as np
 from itertools import combinations
 from sklearn import svm
 
-def run(clf):
-    ##clf = svm.SVC(gamma = 'scale')
+def run():
+    clf = svm.SVC(gamma = 'scale')
 
     ## read X0-X7, Y0-Y7
     List_x = [None] * 8
     List_y = [None] * 8
     for i in range(8):
-        x_name = "data\\X" + str(i) + ".npy"
-        y_name = "data\\Y" + str(i) + ".npy"
+        x_name = "data//X" + str(i) + ".npy"
+        y_name = "data//Y" + str(i) + ".npy"
         List_x[i] = np.load(x_name)
         List_y[i] = np.load(y_name)
 
@@ -72,3 +72,6 @@ def run(clf):
 
     print("4-4 test acc: " + str(count / 28000))
     return
+
+if __name__ == '__main__':
+    run()
