@@ -1,37 +1,25 @@
 # Pokemon Legendary Predictor
-#Project Goal: To predict Pokemon legendary using svm
 
-Files exists:
+Documents:
+    Pokemon.csv: Raw data
 
-    Pokemon.csv:
-        Raw data
+    output.npg: Data Pattern
 
-    x.npy:
-        Data after preprocess
-        Use commend:
-            x = np.load("npy")
-        To take values in x.npy
+Files:
+    data:
+        X0-X7.npy: each npy file is a (100,6) np 2d-array, corresponding to Y0-Y7
+        Y0-Y7.npy: each npy file is a (100) np array, each contain 8-9 negative label, and               91-92 1abel
 
-        x[:, 0] : unique id
-            #we might not need this for training/testing
-        x[:, 1] : total of all stat
-        x[:, 2:7] : specific stat for a pokemon e.g. speed, attack...
-        x[:, 8] : pokemon generation 
-            #we might not need this for training/testing
-        x[:, 9] : legendary label, 0 : false, 1 : true 
-            #we might not need this for training/testing
+        All data is from Pokemon, no sample is repeated
 
-    output.png:
-        A big picture how does the data look like
-    
-Script:
+    inputData:
+        ...
 
-    Done:
-        None
 
-    To do:
-        A preprocess file to seperate x into 8 different groups
+Scripts:
+    data.py:
+        Generate npy file from x_clean.npy to npys in data
 
-        A cross validation test 4-4, 7-1
-
-        A main file(maybe)
+    cross.py:
+        Input: sklearn.svm
+        Output: training 7-1 4-4 acc
