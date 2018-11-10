@@ -1,6 +1,7 @@
 # Pokemon Legendary Predictor
 
 Documents:
+
     Pokemon.csv: Raw data
 
     output.npg: Data Pattern
