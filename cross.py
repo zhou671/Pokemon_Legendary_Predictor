@@ -2,8 +2,8 @@ import numpy as np
 from itertools import combinations
 from sklearn import svm
 
-def run():
-    clf = svm.SVC(gamma = 'scale')
+def run(clf):
+    ##clf = svm.SVC(gamma = 'scale')
 
     ## read X0-X7, Y0-Y7
     List_x = [None] * 8
@@ -72,6 +72,3 @@ def run():
 
     print("4-4 test acc: " + str(count / 28000))
     return
-
-if __name__ == '__main__':
-	run() 
