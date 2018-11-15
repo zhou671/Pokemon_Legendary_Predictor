@@ -1,0 +1,80 @@
+0.5
+Training acc: 0.965
+7-1 test acc: 0.9475
+4-4 test acc: 0.9389642857142857
+0.55
+Training acc: 0.9625
+7-1 test acc: 0.9475
+4-4 test acc: 0.9390714285714286
+0.6
+Training acc: 0.9625
+7-1 test acc: 0.9475
+4-4 test acc: 0.9390714285714286
+0.65
+Training acc: 0.9625
+7-1 test acc: 0.9475
+4-4 test acc: 0.9390357142857143
+0.7
+Training acc: 0.9625
+7-1 test acc: 0.9475
+4-4 test acc: 0.9389642857142857
+0.75
+Training acc: 0.9625
+7-1 test acc: 0.9475
+4-4 test acc: 0.9388928571428572
+0.8
+Training acc: 0.9625
+7-1 test acc: 0.9475
+4-4 test acc: 0.9389285714285714
+0.85
+Training acc: 0.9625
+7-1 test acc: 0.9475
+4-4 test acc: 0.9389642857142857
+0.9
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.9388928571428572
+0.95
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.9386428571428571
+1.0
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.9386785714285715
+1.05
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.93875
+1.1
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.9386428571428571
+1.15
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.9386428571428571
+1.2
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.9386785714285715
+1.25
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.93875
+1.3
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.9386785714285715
+1.35
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.9387142857142857
+1.4
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.9387857142857143
+1.45
+Training acc: 0.96375
+7-1 test acc: 0.9475
+4-4 test acc: 0.93875
