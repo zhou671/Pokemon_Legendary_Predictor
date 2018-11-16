@@ -4,21 +4,30 @@ from sklearn import svm
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.svm import OneClassSVM 
 
-def run(clf):
+def run(data):
 
+    clf = svm.LinearSVC(penalty = 'l2', loss = 'squared_hinge', dual = False, C = 1.0)
+    #clf = GradientBoostingClassifier(learning_rate= 0.02, n_estimators=180, max_depth=3)
+
+    prefix = str()
+    if data == 1 :
+        prefix = str("dataWOtype//")
+    else:
+        prefix = str("dataWtype//")
     ## read X0-X7, Y0-Y7
     List_x = [None] * 8
     List_y = [None] * 8
     for i in range(8):
-        x_name = "data//X" + str(i) + ".npy"
-        y_name = "data//Y" + str(i) + ".npy"
+        x_name = prefix + "X" + str(i) + ".npy"
+        y_name = prefix + "Y" + str(i) + ".npy"
 
         List_x[i] = np.load(x_name)
         List_y[i] = np.load(y_name)
 
+    n, d = List_x[0].shape
     ## training acc
     count = 0
-    x = np.zeros((800, 6))
+    x = np.zeros((800, d))
     y = np.zeros((800))
     for i in range(8):
         x[i*100:i*100+100] = List_x[i]
@@ -34,7 +43,7 @@ def run(clf):
     for i in range(8):
         test_x = List_x[i]
         test_y = List_y[i]
-        x = np.zeros((0, 6))
+        x = np.zeros((0, d))
         y = np.zeros((0))
         for j in range(8):
             if not i == j:
@@ -53,7 +62,7 @@ def run(clf):
     count = 0
     comb = list(combinations(range(8), 4))
     for i in range(70):
-        x = np.zeros((400,6))
+        x = np.zeros((400,d))
         y = np.zeros((400))
         s = set(range(8))
         for j in range(4):
@@ -61,7 +70,7 @@ def run(clf):
             y[j*100:j*100+100] = List_y[comb[i][j]]
             s.remove(comb[i][j])
 
-        test_x = np.zeros((400,6))
+        test_x = np.zeros((400,d))
         test_y = np.zeros((400))
         s = list(s)
         for j in range(4):
@@ -82,5 +91,4 @@ if __name__ == '__main__':
         run(clf)
     #clf_gradient = GradientBoostingClassifier(learning_rate=0.2, n_estimators=180, max_depth=3)
     #clf_oneClassSVM = OneClassSVM(gamma = 0.5)
-    #clf = svm.SVC(gamma = 'scale')
-    #run(clf_gradient)
+    run(2)
