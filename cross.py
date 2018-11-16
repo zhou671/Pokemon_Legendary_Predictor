@@ -76,12 +76,11 @@ def run(clf):
     return
 
 if __name__ == '__main__':
-    # for j in range(10):
-
-    #     clf = GradientBoostingClassifier(learning_rate= j * 0.02 + 0.1, n_estimators=180, max_depth=3)
-    #     print('rate ' + str(j * 0.02 + 0.1))
-    #     run(clf)
+    for j in range(10):
+        clf = GradientBoostingClassifier(learning_rate= j * 0.02 + 0.1, n_estimators=180, max_depth=3)
+        print('rate ' + str(j * 0.02 + 0.1))
+        run(clf)
     #clf_gradient = GradientBoostingClassifier(learning_rate=0.2, n_estimators=180, max_depth=3)
     #clf_oneClassSVM = OneClassSVM(gamma = 0.5)
-    clf = svm.SVC(gamma = 'scale')
-    run(clf)
+    #clf = svm.SVC(gamma = 'scale')
+    #run(clf_gradient)
