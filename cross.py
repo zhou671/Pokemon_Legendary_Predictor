@@ -1,19 +1,22 @@
+import sys
 import numpy as np
 from itertools import combinations
 from sklearn import svm
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.svm import OneClassSVM 
 
-def run(data):
+def run(clf, data):
 
-    clf = svm.LinearSVC(penalty = 'l2', loss = 'squared_hinge', dual = False, C = 1.0)
-    #clf = GradientBoostingClassifier(learning_rate= 0.02, n_estimators=180, max_depth=3)
+    #clf = svm.LinearSVC(penalty = 'l2', loss = 'squared_hinge', dual = False, C = 1)
 
     prefix = str()
     if data == 1 :
         prefix = str("dataWOtype//")
+        print("Without Type")
     else:
         prefix = str("dataWtype//")
+        print("With Type")
+    print(clf.get_params())
     ## read X0-X7, Y0-Y7
     List_x = [None] * 8
     List_y = [None] * 8
@@ -85,11 +88,17 @@ def run(data):
     return
 
 if __name__ == '__main__':
-    # for j in range(10):
-
-    #     clf = GradientBoostingClassifier(learning_rate= j * 0.02 + 0.1, n_estimators=180, max_depth=3)
-    #     print('rate ' + str(j * 0.02 + 0.1))
-    #     run(clf)
+    #clf = GradientBoostingClassifier(learning_rate= 0.02, n_estimators=180, max_depth=3)
     #clf_gradient = GradientBoostingClassifier(learning_rate=0.2, n_estimators=180, max_depth=3)
     #clf_oneClassSVM = OneClassSVM(gamma = 0.5)
-    run(2)
+    algo = [GradientBoostingClassifier(learning_rate= 0.02, n_estimators=180, max_depth=3), 
+    svm.LinearSVC(penalty = 'l2', loss = 'squared_hinge', dual = False, C = 0.5), 
+    svm.SVC(kernel = 'poly', degree = 2, C = 0.5, gamma = 'scale')]
+
+    for i in range(3):
+        for j in range(2):
+            run(algo[i], j)
+
+
+    
+    
