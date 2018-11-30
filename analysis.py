@@ -1,12 +1,15 @@
 import pandas as pd
 import numpy as np
 import seaborn as sns
+import matplotlib.pyplot as plt
 
 if __name__ == '__main__':
     # Plot stat vs legendary
     data = pd.read_csv("Pokemon.csv")
     stat = data.drop(['#','Type 1', 'Type 2','Total','Generation','Name'], axis = 1)
     stat = pd.melt(stat, id_vars = ['Legendary'], var_name = "stat")
+
+    plt.figure()
     sns.swarmplot(x="stat", y="value", data=stat, hue="Legendary").get_figure().savefig("Results//Stat_vs_Le.png")
 
     # Plot type vs legendary
@@ -24,5 +27,7 @@ if __name__ == '__main__':
         
 
     df = pd.DataFrame(val, columns = ['Type Name', 'Type 1', 'Type 2', 'Total'])
+    plt.figure()
     sns.barplot(x="Type Name", y="Type 1", data=df).get_figure().savefig("Results//Type1_vs_Le.png")
+    plt.figure()
     sns.barplot(x="Type Name", y="Type 2", data=df).get_figure().savefig("Results//Type2_vs_Le.png")
