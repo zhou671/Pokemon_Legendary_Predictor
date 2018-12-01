@@ -13,7 +13,7 @@ from sklearn.svm import OneClassSVM
 
 class train:
     def __init__(self, x, y, modelType):
-        self.C = np.array(range(10) / 10.0)
+        self.C = np.array(range(10)) / 10.0 + 0.1
         self.rate = np.array(range(5)) / 100.0 + 0.01
         self.n = np.array(range(10)) * 10.0 + 150
         self.model = None
@@ -28,8 +28,9 @@ class train:
         self.n_pos = len(x_pos)
         self.n_neg = len(x_neg)
         self.modelType = modelType
+        self.feature = None
 
-    def booststrapping(self, type, model):
+    def booststrapping(self, i, model):
         acc = np.zeros(30)
         for b in range(30):
             train_samples_pos = list(np.random.randint(0, self.n_pos, self.n_pos))
@@ -40,45 +41,66 @@ class train:
             train_y = np.concatenate((self.y_pos[train_samples_pos], self.y_neg[train_samples_neg]), axis = 0)
             test_x = np.concatenate((self.x_pos[i][test_samples_pos], self.x_neg[i][test_samples_neg]), axis = 0)
             test_y = np.concatenate((self.y_pos[test_samples_pos], self.y_neg[test_samples_neg]), axis = 0)
-            model.fit(train_x, train_y])
-            acc[b] = np.mean(test_y == model.predict[test_x])
-        return np.mean(acc)
+            model.fit(train_x, train_y)
+            acc[b] = np.mean(test_y == model.predict(test_x))
+        
+        return np.mean(acc) 
 
     def training(self):
         paraFunc = self.modelfuncs[self.modelType]
         paraFunc(self)
-        return self.model
+        return self.model, self.feature
        
     def gradientPara(self):
         bs_acc = 0
+        print("GradientBoostingClassifier")
         for i in range(2):
             for j in range(5):
                 for k in range(10):
-                    model = GradientBoostingClassifier(learning_rate = self.rate[j], n_estimators = self.n[k], max_depth=3)
-                    acc = self.booststrapping(self, x[i], model)
+                    model = GradientBoostingClassifier(learning_rate = self.rate[j], n_estimators = int(self.n[k]), max_depth=3)
+
+                    acc = self.booststrapping(i, model)
+
                     if acc > bs_acc:
                         bs_acc = acc
                         self.model = model
-        
-    
+                        self.feature = i
+
+        print("best para: " + str(self.model.get_params()))
+        print("best acc: " + str(bs_acc))
+           
     def linearPara(self):
         bs_acc = 0
+        print("LinearSVM")
         for i in range(2):
             for j in range(10):
                 model = svm.LinearSVC(penalty = 'l2', loss = 'squared_hinge', dual = False, C = self.C[j])
-                acc = self.booststrapping(self, i, model)
+
+                acc = self.booststrapping(i, model)
+
                 if acc > bs_acc:
                         bs_acc = acc
                         self.model = model
+                        self.feature = i
+
+        print("best para: " + str(self.model.get_params()))
+        print("best acc: " + str(bs_acc))
 
     def kerPara(self):
         bs_acc = 0
+        print("2ndSVM")
         for i in range(2):
             for j in range(10):
-                model = svm.SVC(kernel = 'poly', degree = 2, C = 0.5, gamma = 'scale')
-                acc = self.booststrapping(self, i, model)
+                model = svm.SVC(kernel = 'poly', degree = 2, C = self.C[j], gamma = 'scale')
+
+                acc = self.booststrapping(i, model)
+
                 if acc > bs_acc:
                         bs_acc = acc
                         self.model = model
+                        self.feature = i
 
-    modelfuncs = {gradientPara, linearPara, kerPara}
+        print("best para: " + str(self.model.get_params()))
+        print("best acc: " + str(bs_acc))
+
+    modelfuncs = [linearPara, kerPara, gradientPara]
