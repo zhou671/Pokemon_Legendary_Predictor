@@ -1,56 +1,41 @@
 import numpy as np
+from sklearn import metrics
+from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
-from itertools import cycle
+from sklearn.metrics import auc
 
-from sklearn import svm, datasets
-from sklearn.metrics import roc_curve, auc
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import label_binarize
-from sklearn.multiclass import OneVsRestClassifier
-from scipy import interp
+def run(y_real, y_pred1, y_pred2, y_pred3, k):
+	
+	#code for prototype, will be delete when real testing
+	# y_real = np.random.choice(2, 800, p = [0.92, 0.08])
+	# y_pred1 = np.random.randint(1, size = 800)
+	# y_pred2 = np.random.choice(2, 800, p = [0.92, 0.08])
+	# y_pred3 = np.random.choice(2, 800, p = [0.92, 0.08])
 
-def run():
-	# Import some data to play with
-	iris = datasets.load_iris()
-	X = iris.data
-	y = iris.target
+	#generate results for 1st set
+	tn1,fp1,fn1,tp1 = confusion_matrix(y_real, y_pred1).ravel()
+	specificity1 = float(tn1) / (tn1+fp1)
+	sensitivity1 = float(tp1) / (tp1+fn1)
+	plt.plot(specificity1,sensitivity1, marker = 'o', color = 'r', label = 'Linear')
+	#generate results for 2nd set
+	tn2,fp2,fn2,tp2 = confusion_matrix(y_real, y_pred2).ravel()
+	specificity2 = float(tn2) / (tn2+fp2)
+	sensitivity2 = float(tp2) / (tp2+fn2)
+	plt.plot(specificity2,sensitivity2, marker = 'o', color = 'g', label = '2ndSVM')
+	
+	#generate results for 3rd set
+	tn3,fp3,fn3,tp3 = confusion_matrix(y_real, y_pred3).ravel()
+	specificity3 = float(tn3) / (tn3+fp3)
+	sensitivity3 = float(tp3) / (tp3+fn3)
+	plt.plot(specificity3,sensitivity3, marker = 'o', color = 'b', label = 'Gradient')
+	
+	#labels and title setting
+	plt.title('ROC')
+	plt.xlabel("Specificity")
+	plt.ylabel("Sensitivity")
+	plt.legend(loc='lower left')
 
-	# Binarize the output
-	y = label_binarize(y, classes=[0, 1, 2])
-	n_classes = y.shape[1]
-
-	# Add noisy features to make the problem harder
-	random_state = np.random.RandomState(0)
-	n_samples, n_features = X.shape
-	X = np.c_[X, random_state.randn(n_samples, 200 * n_features)]
-
-	# shuffle and split training and test sets
-	X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=.5, random_state=0)
-
-	# Learn to predict each class against the other
-	classifier = OneVsRestClassifier(svm.SVC(kernel='linear', probability=True, random_state=random_state))
-	y_score = classifier.fit(X_train, y_train).decision_function(X_test)
-
-	# Compute ROC curve and ROC area for each class
-	fpr = dict()
-	tpr = dict()
-	roc_auc = dict()
-	for i in range(n_classes):
-		fpr[i], tpr[i], _ = roc_curve(y_test[:, i], y_score[:, i])
-		roc_auc[i] = auc(fpr[i], tpr[i])
-
-	# Compute micro-average ROC curve and ROC area
-	fpr["micro"], tpr["micro"], _ = roc_curve(y_test.ravel(), y_score.ravel())
-	roc_auc["micro"] = auc(fpr["micro"], tpr["micro"])
-
-	plt.figure()
-	lw = 2
-	plt.plot(fpr[2], tpr[2], color='darkorange', lw=lw, label='ROC curve (area = %0.2f)' % roc_auc[2]).get_figure().savefig("Results/test1.png")
-	plt.plot([0, 1], [0, 1], color='navy', lw=lw, linestyle='--').get_figure().savefig("Results/test2.png")
-	plt.xlim([0.0, 1.0])
-	plt.ylim([0.0, 1.05])
-	plt.xlabel('False Positive Rate')
-	plt.ylabel('True Positive Rate')
-	plt.title('Receiver operating characteristic example')
-	plt.legend(loc="lower right")
-	plt.show()
+	name = ["8-fold.png", "2-fold.png"]
+	#graph saving as .png file
+	plt.savefig("./Results/" + name[k])
+	
